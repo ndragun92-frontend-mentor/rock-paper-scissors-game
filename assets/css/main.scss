@@ -7,5 +7,9 @@ html {
 body {
   font-family: 'Barlow Semi Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
-  @apply w-screen h-screen;
+  @apply w-screen h-screen font-semibold;
+}
+
+#__nuxt {
+  @apply w-full h-full;
 }

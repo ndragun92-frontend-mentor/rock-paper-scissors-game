@@ -34,9 +34,14 @@ module.exports = {
       colors: {
         primary: {
           dark: "hsl(229, 25%, 31%)",
+          light: "#f8f8f8",
           score: "hsl(229, 64%, 46%)",
           header: "hsl(217, 16%, 45%)",
         },
+      },
+      boxShadow: {
+        outerRock: "0 10px 1px -1px #9f1535, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        inner: "inset 0 10px 1px -1px #b9bfd4",
       },
       flex: {
         2: "2 2 0%",
