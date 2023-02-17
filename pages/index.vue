@@ -26,7 +26,7 @@
             />
           </div>
         </header>
-        <main class="flex-1 flex items-center justify-center p-6 md:p-2">
+        <main class="flex-1 flex items-center justify-center p-10 md:p-2">
           <transition-slide group appear>
             <div v-if="!gameStore.data.player" key="stage1" class="relative">
               <img
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div v-else key="stage2">
-              <div class="flex gap-12 items-center">
+              <div class="gap-12 items-center hidden lg:flex">
                 <div>
                   <div
                     class="text-2xl font-bold uppercase tracking-widest text-primary-light text-center"
@@ -85,7 +85,7 @@
                       <transition-scale>
                         <button
                           v-if="gameStore.data.finished"
-                          class="mt-6 bg-primary-light text-lg py-2.5 w-full text-red-500 tracking-widest uppercase rounded-lg shadow-lg hover:-translate-y-2 duration-200"
+                          class="mt-6 bg-primary-light text-lg py-2.5 w-full text-primary-dark hover:text-red-500 tracking-widest uppercase rounded-lg shadow-lg"
                           type="button"
                           @click="playAgain"
                         >
@@ -130,6 +130,104 @@
                         </div>
                       </div>
                     </lazy-el-button-placeholder>
+                  </div>
+                </div>
+              </div>
+              <div class="lg:hidden">
+                <div class="flex gap-12 items-center pointer-events-none">
+                  <div
+                    :class="{
+                      'relative z-10':
+                        gameStore.data.opponent &&
+                        gameStore.data.state === 'lost',
+                    }"
+                  >
+                    <div class="mb-8">
+                      <lazy-el-button
+                        :type="gameStore.data.player"
+                        :won="
+                          gameStore.data.opponent &&
+                          gameStore.data.state === 'won'
+                        "
+                        :step="2"
+                      />
+                    </div>
+                    <div
+                      class="font-bold uppercase tracking-widest text-primary-light text-center whitespace-nowrap"
+                    >
+                      You picked
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mb-8">
+                      <lazy-el-button
+                        v-if="gameStore.data.opponent"
+                        :type="gameStore.data.opponent"
+                        :won="
+                          gameStore.data.opponent &&
+                          gameStore.data.state === 'lost'
+                        "
+                        :step="2"
+                      />
+                      <lazy-el-button-placeholder v-else :step="2">
+                        <div
+                          v-if="timer"
+                          class="text-sm text-primary-light text-center"
+                        >
+                          <div class="font-bold">
+                            {{ timer }}
+                          </div>
+                          <div class="text-primary-light">
+                            {{ pluralize(timer, "second") }}
+                          </div>
+                        </div>
+                      </lazy-el-button-placeholder>
+                    </div>
+                    <div
+                      class="font-bold uppercase tracking-widest text-primary-light text-center"
+                    >
+                      <span
+                        v-text="
+                          timer && !gameStore.data.opponent
+                            ? 'The house picking'
+                            : 'The house picked'
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="max-w-[280px] w-full mx-auto mt-20">
+                  <div
+                    class="relative whitespace-nowrap duration-700"
+                    :class="
+                      gameStore.data.opponent ? 'opacity-100' : 'opacity-0'
+                    "
+                  >
+                    <div
+                      class="relative top-0 left-0 bottom-0 right-0 text-center"
+                    >
+                      <h2
+                        class="text-6xl uppercase font-bold text-primary-light text-shadow"
+                      >
+                        <template v-if="gameStore.data.state === 'draw'">
+                          Draw
+                        </template>
+                        <template v-else-if="gameStore.data.state === 'won'">
+                          You won
+                        </template>
+                        <template v-else> You lose </template>
+                      </h2>
+                      <button
+                        class="mt-6 bg-primary-light text-lg py-2.5 w-full text-primary-dark hover:text-red-500 tracking-widest uppercase rounded-lg shadow-lg duration-700"
+                        :class="
+                          gameStore.data.finished ? 'opacity-100' : 'opacity-0'
+                        "
+                        type="button"
+                        @click="playAgain"
+                      >
+                        Play again
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
