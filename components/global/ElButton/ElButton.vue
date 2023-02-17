@@ -3,6 +3,7 @@
     class="mx-auto bg-primary-light w-40 h-40 flex items-center justify-center rounded-full border-10 hover:-translate-y-2 duration-200"
     :class="returnClass"
     type="button"
+    @click="gameStore.setPlayer(props.type)"
   >
     <span
       class="bg-primary-light w-32 h-32 rounded-full flex items-center justify-center shadow-inner"
@@ -17,9 +18,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useGameStore } from "~/store/gameStore";
+
 const props = defineProps<{
-  type?: "scissors" | "paper" | "rock" | "lizard" | "cyan";
+  type: "scissors" | "paper" | "rock" | "lizard" | "cyan";
 }>();
+
+const gameStore = useGameStore();
 
 const returnClass = computed(() => {
   switch (props.type) {

@@ -14,7 +14,10 @@
             <div class="text-primary-score uppercase tracking-widest text-lg">
               Score
             </div>
-            <div class="font-bold text-7xl text-primary-dark">12</div>
+            <div
+              class="font-bold text-7xl text-primary-dark"
+              v-text="gameStore.data.score"
+            />
           </div>
         </header>
         <main class="flex-1 flex items-center justify-center">
@@ -42,6 +45,9 @@
       <lazy-el-modal-rules v-if="showModal" @close="showModal = false" />
     </transition-slide>
   </teleport>
+  <!--  <pre>-->
+  <!--    {{ gameStore.data }}-->
+  <!--  </pre>-->
 </template>
 
 <script lang="ts">
@@ -51,5 +57,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import { useGameStore } from "~/store/gameStore";
+
 const showModal = ref(false);
+
+const gameStore = useGameStore();
 </script>
