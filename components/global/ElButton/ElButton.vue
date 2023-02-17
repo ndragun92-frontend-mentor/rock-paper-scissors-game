@@ -35,10 +35,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useGameStore } from "~/store/gameStore";
+import { CardEnum, useGameStore } from "~/store/gameStore";
 
 const props = defineProps<{
-  type: "scissors" | "paper" | "rock" | "lizard" | "cyan";
+  type:
+    | CardEnum.scissors
+    | CardEnum.paper
+    | CardEnum.rock
+    | CardEnum.lizard
+    | CardEnum.spock;
   large?: boolean;
   won?: boolean;
   step?: 1 | 2;
@@ -49,12 +54,16 @@ const gameStore = useGameStore();
 const returnClass = computed(() => {
   const largeClass = props.large ? "Large" : "";
   switch (props.type) {
-    case "rock":
+    case CardEnum.rock:
       return `bg-rock shadow-outerRock${largeClass}`;
-    case "paper":
+    case CardEnum.paper:
       return `bg-paper shadow-outerPaper${largeClass}`;
-    case "scissors":
+    case CardEnum.scissors:
       return `bg-scissors shadow-outerScissors${largeClass}`;
+    case CardEnum.lizard:
+      return `bg-lizard shadow-outerLizard${largeClass}`;
+    case CardEnum.spock:
+      return `bg-spock shadow-outerSpock${largeClass}`;
     default:
       return "";
   }
@@ -62,12 +71,16 @@ const returnClass = computed(() => {
 
 const returnIcon = computed(() => {
   switch (props.type) {
-    case "rock":
+    case CardEnum.rock:
       return "icon-rock.svg";
-    case "paper":
+    case CardEnum.paper:
       return "icon-paper.svg";
-    case "scissors":
+    case CardEnum.scissors:
       return "icon-scissors.svg";
+    case CardEnum.lizard:
+      return "icon-lizard.svg";
+    case CardEnum.spock:
+      return "icon-spock.svg";
     default:
       return "";
   }

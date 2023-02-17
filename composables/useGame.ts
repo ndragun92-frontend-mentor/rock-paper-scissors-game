@@ -1,5 +1,5 @@
-import type { gameState, playerType } from "~/store/gameStore";
-import { useGameStore } from "~/store/gameStore";
+import type { GameState, PlayerType } from "~/store/gameStore";
+import { CardEnum, GameEnum, useGameStore } from "~/store/gameStore";
 import { promiseTimeout, useStorage } from "@vueuse/core";
 
 export default function useGame() {
@@ -18,10 +18,24 @@ export default function useGame() {
     gameStore.data.data.finished = true;
   };
 
-  const availableCardsSimple = ["scissors", "paper", "rock"] as playerType[];
+  const availableCardsSimple = computed<PlayerType[]>(() => {
+    if (isBonusGame) {
+      return [
+        CardEnum.scissors,
+        CardEnum.paper,
+        CardEnum.rock,
+        CardEnum.lizard,
+        CardEnum.spock,
+      ];
+    } else {
+      return [CardEnum.scissors, CardEnum.paper, CardEnum.rock];
+    }
+  });
+
+  const isBonusGame = computed(() => game.value.data.score >= 5);
   const pickRandom = () => {
-    return availableCardsSimple[
-      Math.floor(Math.random() * availableCardsSimple.length)
+    return availableCardsSimple.value[
+      Math.floor(Math.random() * availableCardsSimple.value.length)
     ];
   };
 
@@ -37,30 +51,54 @@ export default function useGame() {
     const playerChoice = gameStore.data.data.player;
     const opponentChoice = gameStore.data.data.opponent;
     switch (playerChoice) {
-      case "rock":
-        if (opponentChoice === "paper") {
+      case CardEnum.rock:
+        if ([CardEnum.scissors, CardEnum.lizard].includes(opponentChoice!)) {
           won();
-        } else if (opponentChoice === "rock") {
+        } else if (opponentChoice === CardEnum.rock) {
           draw();
-        } else if (opponentChoice === "scissors") {
+        } else if ([CardEnum.paper, CardEnum.spock].includes(opponentChoice!)) {
           lost();
         }
         break;
-      case "paper":
-        if (opponentChoice === "rock") {
+      case CardEnum.paper:
+        if ([CardEnum.rock, CardEnum.spock].includes(opponentChoice!)) {
           won();
-        } else if (opponentChoice === "paper") {
+        } else if (opponentChoice === CardEnum.paper) {
           draw();
-        } else if (opponentChoice === "scissors") {
+        } else if (
+          [CardEnum.scissors, CardEnum.lizard].includes(opponentChoice!)
+        ) {
           lost();
         }
         break;
-      case "scissors":
-        if (opponentChoice === "paper") {
+      case CardEnum.scissors:
+        if ([CardEnum.paper, CardEnum.lizard].includes(opponentChoice!)) {
           won();
-        } else if (opponentChoice === "scissors") {
+        } else if (opponentChoice === CardEnum.scissors) {
           draw();
-        } else if (opponentChoice === "rock") {
+        } else if ([CardEnum.spock, CardEnum.rock].includes(opponentChoice!)) {
+          lost();
+        }
+        break;
+      case CardEnum.lizard:
+        if ([CardEnum.spock, CardEnum.paper].includes(opponentChoice!)) {
+          won();
+        } else if (opponentChoice === CardEnum.lizard) {
+          draw();
+        } else if (
+          [CardEnum.scissors, CardEnum.rock].includes(opponentChoice!)
+        ) {
+          lost();
+        }
+        break;
+      case CardEnum.spock:
+        if ([CardEnum.scissors, CardEnum.rock].includes(opponentChoice!)) {
+          won();
+        } else if (opponentChoice === CardEnum.spock) {
+          draw();
+        } else if (
+          [CardEnum.lizard, CardEnum.paper].includes(opponentChoice!)
+        ) {
           lost();
         }
         break;
@@ -68,37 +106,37 @@ export default function useGame() {
   };
 
   const won = () => {
-    gameStore.data.data.state = "won";
+    gameStore.data.data.state = GameEnum.won;
     game.value.data.score++;
-    audioPlay("won");
+    audioPlay(GameEnum.won);
   };
 
   const draw = () => {
-    gameStore.data.data.state = "draw";
-    audioPlay("draw");
+    gameStore.data.data.state = GameEnum.draw;
+    audioPlay(GameEnum.draw);
   };
 
   const lost = () => {
     if (game.value.data.score > 0) {
       game.value.data.score--;
     }
-    audioPlay("lost");
+    audioPlay(GameEnum.lost);
   };
 
   const playAgain = () => {
     gameStore.reset();
   };
 
-  const audioPlay = (type: gameState) => {
+  const audioPlay = (type: GameState) => {
     let audioPath;
     switch (type) {
-      case "won":
+      case GameEnum.won:
         audioPath = new URL(`/audio/won.mp3`, import.meta.url).href;
         break;
-      case "lost":
+      case GameEnum.lost:
         audioPath = new URL(`/audio/lost.mp3`, import.meta.url).href;
         break;
-      case "draw":
+      case GameEnum.draw:
         audioPath = new URL(`/audio/draw.mp3`, import.meta.url).href;
         break;
     }
@@ -107,5 +145,5 @@ export default function useGame() {
     lostAudio?.play();
   };
 
-  return { game, botPlay, pluralize, playAgain };
+  return { game, botPlay, pluralize, playAgain, isBonusGame };
 }

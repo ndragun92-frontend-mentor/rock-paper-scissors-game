@@ -36,7 +36,7 @@ module.exports = {
         paper: "radial-gradient(hsl(230, 89%, 62%), hsl(230, 89%, 65%))",
         rock: "radial-gradient(hsl(349, 71%, 52%), hsl(349, 70%, 56%))",
         lizard: "radial-gradient(hsl(261, 73%, 60%), hsl(261, 72%, 63%))",
-        cyan: "radial-gradient(hsl(189, 59%, 53%), hsl(189, 58%, 57%))",
+        spock: "radial-gradient(hsl(189, 59%, 53%), hsl(189, 58%, 57%))",
       },
       colors: {
         primary: {

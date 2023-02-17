@@ -1,43 +1,57 @@
 import { defineStore } from "pinia";
 
-export type playerType =
-  | "scissors"
-  | "paper"
-  | "rock"
-  | "lizard"
-  | "cyan"
+export enum CardEnum {
+  scissors = "scissors",
+  paper = "paper",
+  rock = "rock",
+  lizard = "lizard",
+  spock = "spock",
+}
+
+export type PlayerType =
+  | CardEnum.scissors
+  | CardEnum.paper
+  | CardEnum.rock
+  | CardEnum.lizard
+  | CardEnum.spock
   | null;
 
-export type gameState = "won" | "lost" | "draw";
+export enum GameEnum {
+  won = "won",
+  lost = "lost",
+  draw = "draw",
+}
+
+export type GameState = GameEnum.won | GameEnum.lost | GameEnum.draw;
 export const useGameStore = defineStore("game", () => {
   const defaultData = {
     player: null,
     opponent: null,
-    state: "lost" as gameState,
+    state: GameEnum.lost as GameState,
     finished: false,
   };
 
   const data = reactive<{
     data: {
-      player: playerType;
-      opponent: playerType;
-      state: gameState;
+      player: PlayerType;
+      opponent: PlayerType;
+      state: GameState;
       finished: boolean;
     };
   }>({
     data: {
       player: defaultData.player,
       opponent: defaultData.opponent,
-      state: defaultData.state as gameState,
+      state: defaultData.state as GameState,
       finished: defaultData.finished,
     },
   });
 
-  const setPlayer = (value: playerType) => {
+  const setPlayer = (value: PlayerType) => {
     data.data.player = value;
   };
 
-  const setOpponent = (value: playerType) => {
+  const setOpponent = (value: PlayerType) => {
     data.data.opponent = value;
   };
 
@@ -45,7 +59,7 @@ export const useGameStore = defineStore("game", () => {
     data.data = {
       player: defaultData.player,
       opponent: defaultData.opponent,
-      state: defaultData.state as gameState,
+      state: defaultData.state as GameState,
       finished: defaultData.finished,
     };
   };

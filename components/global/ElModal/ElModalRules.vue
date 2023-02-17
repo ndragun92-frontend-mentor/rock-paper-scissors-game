@@ -20,6 +20,13 @@
       </div>
       <div class="mt-10 flex-1 flex items-center justify-center">
         <img
+          v-if="game.data.score >= 5"
+          class="block mx-auto"
+          src="/images/image-rules-bonus.svg"
+          alt="Image rules - bonus"
+        />
+        <img
+          v-else
           class="block mx-auto"
           src="/images/image-rules.svg"
           alt="Image rules"
@@ -40,6 +47,7 @@
 
 <script lang="ts" setup>
 import { onClickOutside } from "@vueuse/core";
+const { game } = useGame();
 
 const emit = defineEmits(["close"]);
 
