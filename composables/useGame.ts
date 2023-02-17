@@ -1,4 +1,4 @@
-import type { playerType } from "~/store/gameStore";
+import type { gameState, playerType } from "~/store/gameStore";
 import { useGameStore } from "~/store/gameStore";
 import { promiseTimeout, useStorage } from "@vueuse/core";
 
@@ -70,20 +70,41 @@ export default function useGame() {
   const won = () => {
     gameStore.data.data.state = "won";
     game.value.data.score++;
+    audioPlay("won");
   };
 
   const draw = () => {
     gameStore.data.data.state = "draw";
+    audioPlay("draw");
   };
 
   const lost = () => {
     if (game.value.data.score > 0) {
       game.value.data.score--;
     }
+    audioPlay("lost");
   };
 
   const playAgain = () => {
     gameStore.reset();
+  };
+
+  const audioPlay = (type: gameState) => {
+    let audioPath;
+    switch (type) {
+      case "won":
+        audioPath = new URL(`/audio/won.mp3`, import.meta.url).href;
+        break;
+      case "lost":
+        audioPath = new URL(`/audio/lost.mp3`, import.meta.url).href;
+        break;
+      case "draw":
+        audioPath = new URL(`/audio/draw.mp3`, import.meta.url).href;
+        break;
+    }
+    if (!audioPath) return;
+    const lostAudio = new Audio(audioPath);
+    lostAudio?.play();
   };
 
   return { game, botPlay, pluralize, playAgain };

@@ -8,7 +8,7 @@ export type playerType =
   | "cyan"
   | null;
 
-type gameState = "won" | "lost" | "draw";
+export type gameState = "won" | "lost" | "draw";
 export const useGameStore = defineStore("game", () => {
   const defaultData = {
     player: null,
