@@ -6,7 +6,7 @@
           class="border-4 border-primary-header rounded-3xl p-5 flex justify-between items-center"
         >
           <div>
-            <img src="/images/logo.svg" alt="Logo" />
+            <img class="block" src="/images/logo.svg" alt="Logo" />
           </div>
           <div
             class="bg-primary-light flex flex-col items-center justify-center rounded-lg py-4 px-14"
@@ -33,11 +33,23 @@
         </main>
       </div>
     </div>
+    <div class="fixed bottom-8 right-12 z-10">
+      <el-button-rules @click="showModal = true" />
+    </div>
   </div>
+  <teleport to="body">
+    <transition-slide>
+      <lazy-el-modal-rules v-if="showModal" @close="showModal = false" />
+    </transition-slide>
+  </teleport>
 </template>
 
 <script lang="ts">
 export default {
   name: "PageHomepage",
 };
+</script>
+
+<script lang="ts" setup>
+const showModal = ref(false);
 </script>

@@ -37,6 +37,7 @@ module.exports = {
           light: "#f8f8f8",
           score: "hsl(229, 64%, 46%)",
           header: "hsl(217, 16%, 45%)",
+          close: "#3B4262",
         },
       },
       boxShadow: {
