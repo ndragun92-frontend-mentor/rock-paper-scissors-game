@@ -5,6 +5,13 @@
  */
 module.exports = {
   content: [],
+  safelist: [
+    "shadow-outerRockLarge",
+    "shadow-outerPaperLarge",
+    "shadow-outerScissorsLarge",
+    "shadow-inner",
+    "shadow-innerLarge",
+  ],
   theme: {
     screens: {
       touch: { raw: "hover: none" },
@@ -41,10 +48,18 @@ module.exports = {
         },
       },
       boxShadow: {
+        outerPlaceholder: "0 10px 1px -1px transparent",
+        outerPlaceholderLarge: "0 15px 1px -1px transparent",
         outerRock: "0 10px 1px -1px #9f1535, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerRockLarge: "0 15px 1px -1px #9f1535, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         outerPaper: "0 10px 1px -1px #2a48c4, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerPaperLarge:
+          "0 15px 1px -1px #2a48c4, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         outerScissors: "0 10px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerScissorsLarge:
+          "0 15px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         inner: "inset 0 10px 1px -1px #b9bfd4",
+        innerLarge: "inset 0 15px 1px -1px #b9bfd4",
       },
       flex: {
         2: "2 2 0%",

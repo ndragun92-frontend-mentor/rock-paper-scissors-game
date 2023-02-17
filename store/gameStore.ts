@@ -1,7 +1,13 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 
-type playerType = "scissors" | "paper" | "rock" | "lizard" | "cyan" | null;
+export type playerType =
+  | "scissors"
+  | "paper"
+  | "rock"
+  | "lizard"
+  | "cyan"
+  | null;
 export const useGameStore = defineStore("game", () => {
   const data = useStorage<{
     score: number;
