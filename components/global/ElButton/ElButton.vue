@@ -1,11 +1,15 @@
 <template>
   <button
-    class="mx-auto bg-primary-light flex items-center justify-center rounded-full border-10"
+    class="relative z-[2] mx-auto bg-primary-light flex items-center justify-center rounded-full border-10"
     :class="[
       returnClass,
       props.large
         ? 'w-80 h-80'
         : 'w-32 md:w-40 h-32 md:h-40 hover:-translate-y-2 duration-200',
+      {
+        large: props.large,
+        won: props.won,
+      },
     ]"
     type="button"
     @click="props.large ? null : gameStore.setPlayer(props.type)"
@@ -34,18 +38,20 @@ import { useGameStore } from "~/store/gameStore";
 const props = defineProps<{
   type: "scissors" | "paper" | "rock" | "lizard" | "cyan";
   large?: boolean;
+  won?: boolean;
 }>();
 
 const gameStore = useGameStore();
 
 const returnClass = computed(() => {
+  const largeClass = props.large ? "Large" : "";
   switch (props.type) {
     case "rock":
-      return `bg-rock shadow-outerRock${props.large ? "Large" : ""}`;
+      return `bg-rock shadow-outerRock${largeClass}`;
     case "paper":
-      return `bg-paper shadow-outerPaper${props.large ? "Large" : ""}`;
+      return `bg-paper shadow-outerPaper${largeClass}`;
     case "scissors":
-      return `bg-scissors shadow-outerScissors${props.large ? "Large" : ""}`;
+      return `bg-scissors shadow-outerScissors${largeClass}`;
     default:
       return "";
   }
@@ -64,3 +70,14 @@ const returnIcon = computed(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped>
+button {
+  &.won {
+    &:after {
+      content: "";
+      @apply absolute top-0 right-0 bottom-0 left-0 pointer-events-none rounded-full z-[1] shadow-won;
+    }
+  }
+}
+</style>

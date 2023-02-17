@@ -56,6 +56,7 @@
                     <lazy-el-button
                       :large="true"
                       :type="gameStore.data.player"
+                      :won="gameStore.data.finished && gameStore.data.won"
                     />
                   </div>
                 </div>
@@ -74,6 +75,7 @@
                       v-if="gameStore.data.opponent"
                       :large="true"
                       :type="gameStore.data.opponent"
+                      :won="gameStore.data.finished && !gameStore.data.won"
                     />
                     <lazy-el-button-placeholder v-else :large="true">
                       <div v-if="timer" class="text-lg text-white text-center">

@@ -60,6 +60,9 @@ module.exports = {
           "0 15px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         inner: "inset 0 10px 1px -1px #b9bfd4",
         innerLarge: "inset 0 15px 1px -1px #b9bfd4",
+        won: "0 0 0 50px rgba(255, 255, 255, 0.03), 0 0 0 125px rgba(255, 255, 255, 0.03), 0 0 0 200px rgba(255, 255, 255, 0.03)",
+        wonLarge:
+          "0 0 0 50px rgba(255, 255, 255, 0.03), 0 0 0 125px rgba(255, 255, 255, 0.03), 0 0 0 200px rgba(255, 255, 255, 0.03)",
       },
       flex: {
         2: "2 2 0%",

@@ -13,10 +13,14 @@ export const useGameStore = defineStore("game", () => {
     score: number;
     player: playerType;
     opponent: playerType;
+    won: boolean;
+    finished: boolean;
   }>("game-data", {
     score: 0,
     player: null,
     opponent: null,
+    won: false,
+    finished: false,
   });
 
   const setScore = (score: number) => {
