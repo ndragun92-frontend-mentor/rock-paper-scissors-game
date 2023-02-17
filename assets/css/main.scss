@@ -17,7 +17,7 @@ body {
 }
 
 #__nuxt {
-  @apply w-full h-full;
+  @apply w-full h-full flex flex-col;
 }
 
 @import "utils/global";
