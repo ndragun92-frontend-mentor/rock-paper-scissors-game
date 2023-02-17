@@ -58,6 +58,12 @@ module.exports = {
         outerScissors: "0 10px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         outerScissorsLarge:
           "0 15px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerSpock: "0 10px 1px -1px #2f8eaa, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerSpockLarge:
+          "0 15px 1px -1px #2f8eaa, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerLizard: "0 10px 1px -1px #6038ab, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerLizardLarge:
+          "0 15px 1px -1px #6038ab, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         inner: "inset 0 10px 1px -1px #b9bfd4",
         innerLarge: "inset 0 15px 1px -1px #b9bfd4",
         won: "0 0 0 15px rgba(255, 255, 255, 0.03), 0 0 0 40px rgba(255, 255, 255, 0.03), 0 0 0 70px rgba(255, 255, 255, 0.03)",

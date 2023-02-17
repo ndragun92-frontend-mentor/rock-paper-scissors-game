@@ -19,7 +19,7 @@ export default function useGame() {
   };
 
   const availableCardsSimple = computed<PlayerType[]>(() => {
-    if (isBonusGame) {
+    if (isBonusGame.value) {
       return [
         CardEnum.scissors,
         CardEnum.paper,

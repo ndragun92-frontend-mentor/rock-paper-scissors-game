@@ -3,13 +3,13 @@
     <div class="max-w-[1366px] mx-auto w-full h-full">
       <div class="w-full h-full flex flex-col gap-8">
         <header
-          class="max-w-[768px] mx-auto w-full border-4 border-primary-header rounded-3xl px-5 py-4 md:p-5 flex justify-between items-center"
+          class="max-w-[768px] mx-auto w-full border-4 border-primary-header rounded-lg md:rounded-3xl px-2 py-2 pl-4 md:p-5 flex justify-between items-center"
         >
           <client-only>
             <div>
               <img
                 v-if="isBonusGame"
-                class="block w-28 md:w-auto"
+                class="block w-12 md:w-auto"
                 src="/images/logo-bonus.svg"
                 alt="Logo bonus"
               />
@@ -22,23 +22,25 @@
             </div>
           </client-only>
           <div
-            class="bg-primary-light flex flex-col items-center justify-center rounded-lg py-2.5 md:py-4 px-6 md:px-14"
+            class="bg-primary-light flex flex-col items-center justify-center rounded-lg py-1.5 md:py-4 px-6 md:px-14"
           >
             <div
-              class="text-primary-score uppercase tracking-widest md:text-lg"
+              class="text-primary-score uppercase tracking-widest text-xs md:text-lg"
             >
               Score
             </div>
             <client-only>
               <div
-                class="font-bold text-5xl md:text-7xl text-primary-dark"
+                class="font-bold text-4xl md:text-7xl text-primary-dark"
                 v-text="game.data.score"
               />
             </client-only>
           </div>
         </header>
         <client-only>
-          <main class="flex-1 flex items-center justify-center p-10 md:p-2">
+          <main
+            class="flex-1 flex items-center justify-center p-10 pt-2 md:p-2"
+          >
             <transition-slide group appear>
               <div
                 v-if="!gameStore.data.data.player"
@@ -59,7 +61,7 @@
                 />
                 <div
                   v-if="isBonusGame"
-                  class="absolute -bottom-[30%] -right-[15%] flex items-center"
+                  class="absolute -bottom-[15%] md:-bottom-[30%] -right-[0%] md:-right-[15%] flex items-center"
                 >
                   <el-button :type="CardEnum.rock" />
                 </div>
@@ -69,7 +71,10 @@
                 >
                   <el-button :type="CardEnum.rock" />
                 </div>
-                <div v-if="isBonusGame" class="absolute top-[15%] -right-[30%]">
+                <div
+                  v-if="isBonusGame"
+                  class="absolute top-[20%] md:top-[15%] -right-[15%] md:-right-[30%]"
+                >
                   <el-button :type="CardEnum.paper" />
                 </div>
                 <div v-else class="absolute -top-[25%] -left-[15%]">
@@ -77,7 +82,7 @@
                 </div>
                 <div
                   v-if="isBonusGame"
-                  class="absolute -top-[25%] left-0 right-0 flex items-center"
+                  class="absolute -top-[15%] md:-top-[25%] left-0 right-0 flex items-center"
                 >
                   <el-button :type="CardEnum.scissors" />
                 </div>
@@ -86,11 +91,13 @@
                 </div>
                 <template v-if="isBonusGame">
                   <div
-                    class="absolute -bottom-[30%] -left-[15%] flex items-center"
+                    class="absolute -bottom-[15%] md:-bottom-[30%] -left-[0%] md:-left-[15%] flex items-center"
                   >
                     <el-button :type="CardEnum.lizard" />
                   </div>
-                  <div class="absolute top-[15%] -left-[30%]">
+                  <div
+                    class="absolute top-[20%] md:top-[15%] -left-[15%] md:-left-[30%]"
+                  >
                     <el-button :type="CardEnum.spock" />
                   </div>
                 </template>
@@ -111,6 +118,7 @@
                           gameStore.data.data.opponent &&
                           gameStore.data.data.state === GameEnum.won
                         "
+                        :step="2"
                       />
                     </div>
                   </div>
@@ -173,8 +181,13 @@
                           gameStore.data.data.opponent &&
                           gameStore.data.data.state === GameEnum.lost
                         "
+                        :step="2"
                       />
-                      <lazy-el-button-placeholder v-else :large="true">
+                      <lazy-el-button-placeholder
+                        v-else
+                        :large="true"
+                        :step="2"
+                      >
                         <div
                           v-if="timer"
                           class="text-lg text-primary-light text-center"

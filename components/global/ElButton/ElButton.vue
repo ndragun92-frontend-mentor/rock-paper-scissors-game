@@ -6,7 +6,7 @@
       props.large
         ? 'w-80 h-80'
         : 'md:w-40 md:h-40 hover:-translate-y-2 duration-200',
-      props.step === 2 ? 'w-40 h-40' : 'w-32 h-32',
+      props.step === 2 ? 'w-40 h-40' : 'w-24 h-24',
       {
         large: props.large,
         won: props.won,
@@ -21,12 +21,15 @@
         props.large
           ? 'w-64 h-64 shadow-innerLarge'
           : 'md:w-32 md:h-32 shadow-inner',
-        props.step === 2 ? 'w-32 h-32' : 'w-24 h-24',
+        props.step === 2 ? 'w-32 h-32' : 'w-[4.5rem] h-[4.5rem]',
       ]"
     >
       <img
         class="block object-contain"
-        :class="[props.large ? 'w-28 h-28' : 'w-12 md:w-16 h-12 md:h-16']"
+        :class="[
+          props.large ? 'w-28 h-28' : 'w-8 md:w-16 h-8 md:h-16',
+          props.step === 2 ? 'w-16 h-16 md:w-28 md:h-28' : '',
+        ]"
         :src="`/images/${returnIcon}`"
         :alt="`Icon ${props.type}`"
       />
