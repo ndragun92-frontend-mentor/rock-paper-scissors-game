@@ -4,7 +4,6 @@ import { useGameStore } from "~/store/gameStore";
 export default function useGame() {
   const gameStore = useGameStore();
   const botPlay = () => {
-    console.log("botPlay", pickRandom());
     const card = pickRandom();
     gameStore.setOpponent(card);
   };
@@ -12,12 +11,9 @@ export default function useGame() {
   const availableCardsSimple = ["scissors", "paper", "rock"] as playerType[];
   const pickRandom = () => {
     console.log(availableCardsSimple);
-    const randomCard =
-      availableCardsSimple[
-        Math.floor(Math.random() * availableCardsSimple.length)
-      ];
-    console.log("randomCard", randomCard);
-    return randomCard;
+    return availableCardsSimple[
+      Math.floor(Math.random() * availableCardsSimple.length)
+    ];
   };
 
   const pluralize = (val, word, plural = word + "s") => {
