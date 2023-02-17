@@ -8,6 +8,12 @@ body {
   font-family: 'Barlow Semi Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   @apply w-screen h-screen font-semibold;
+  @media only screen and (max-device-width : 1024px) and (orientation : landscape) {
+    @apply w-full h-full;
+    main {
+      @apply mt-24;
+    }
+  }
 }
 
 #__nuxt {
