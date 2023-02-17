@@ -1,9 +1,9 @@
 <template>
   <div class="p-8 md:p-12 w-full h-full">
     <div class="max-w-[1366px] mx-auto w-full h-full">
-      <div class="max-w-[768px] mx-auto w-full h-full flex flex-col gap-8">
+      <div class="w-full h-full flex flex-col gap-8">
         <header
-          class="border-4 border-primary-header rounded-3xl px-5 py-4 md:p-5 flex justify-between items-center"
+          class="max-w-[768px] mx-auto w-full border-4 border-primary-header rounded-3xl px-5 py-4 md:p-5 flex justify-between items-center"
         >
           <div>
             <img
@@ -45,10 +45,10 @@
               </div>
             </div>
             <div v-else key="stage2">
-              <div class="flex gap-16">
+              <div class="flex gap-12 items-center">
                 <div>
                   <div
-                    class="text-2xl font-bold uppercase tracking-widest text-white text-center"
+                    class="text-2xl font-bold uppercase tracking-widest text-primary-light text-center"
                   >
                     You picked
                   </div>
@@ -56,17 +56,54 @@
                     <lazy-el-button
                       :large="true"
                       :type="gameStore.data.player"
-                      :won="gameStore.data.finished && gameStore.data.won"
+                      :won="
+                        gameStore.data.opponent &&
+                        gameStore.data.state === 'won'
+                      "
                     />
                   </div>
                 </div>
+                <transition-slide>
+                  <div
+                    v-if="gameStore.data.opponent"
+                    class="relative whitespace-nowrap"
+                  >
+                    <div
+                      class="relative top-0 left-0 bottom-0 right-0 text-center"
+                    >
+                      <h2
+                        class="text-6xl uppercase font-bold text-primary-light text-shadow"
+                      >
+                        <template v-if="gameStore.data.state === 'draw'">
+                          Draw
+                        </template>
+                        <template v-else-if="gameStore.data.state === 'won'">
+                          You won
+                        </template>
+                        <template v-else> You lose </template>
+                      </h2>
+                      <transition-scale>
+                        <button
+                          v-if="gameStore.data.finished"
+                          class="mt-6 bg-primary-light text-lg py-2.5 w-full text-red-500 tracking-widest uppercase rounded-lg shadow-lg hover:-translate-y-2 duration-200"
+                          type="button"
+                          @click="playAgain"
+                        >
+                          Play again
+                        </button>
+                      </transition-scale>
+                    </div>
+                  </div>
+                </transition-slide>
                 <div>
                   <div
-                    class="text-2xl font-bold uppercase tracking-widest text-white text-center"
+                    class="text-2xl font-bold uppercase tracking-widest text-primary-light text-center"
                   >
                     <span
                       v-text="
-                        timer ? 'The house will pick in' : 'The house picked'
+                        timer && !gameStore.data.opponent
+                          ? 'The house will pick in'
+                          : 'The house picked'
                       "
                     />
                   </div>
@@ -75,10 +112,16 @@
                       v-if="gameStore.data.opponent"
                       :large="true"
                       :type="gameStore.data.opponent"
-                      :won="gameStore.data.finished && !gameStore.data.won"
+                      :won="
+                        gameStore.data.opponent &&
+                        gameStore.data.state === 'lost'
+                      "
                     />
                     <lazy-el-button-placeholder v-else :large="true">
-                      <div v-if="timer" class="text-lg text-white text-center">
+                      <div
+                        v-if="timer"
+                        class="text-lg text-primary-light text-center"
+                      >
                         <div class="font-bold">
                           {{ timer }}
                         </div>
@@ -106,9 +149,6 @@
       <lazy-el-modal-rules v-if="showModal" @close="showModal = false" />
     </transition-slide>
   </teleport>
-  <!--  <pre>-->
-  <!--    {{ gameStore.data }}-->
-  <!--  </pre>-->
 </template>
 
 <script lang="ts">
@@ -125,21 +165,24 @@ const interval = ref<any>(null);
 const timer = ref<any>(3);
 
 const gameStore = useGameStore();
-const { botPlay, pluralize } = useGame();
+const { botPlay, pluralize, playAgain } = useGame();
 
 watch(
   () => gameStore.data.player,
   (type) => {
-    interval.value = setInterval(() => {
-      if (timer.value === 0) {
-        clearInterval(interval.value);
-      } else if (timer.value === 1) {
-        botPlay();
-        timer.value--;
-      } else {
-        timer.value--;
-      }
-    }, 1000);
+    if (type) {
+      interval.value = setInterval(() => {
+        if (timer.value === 0) {
+          clearInterval(interval.value);
+          timer.value = 3;
+        } else if (timer.value === 1) {
+          botPlay();
+          timer.value--;
+        } else {
+          timer.value--;
+        }
+      }, 1000);
+    }
   }
 );
 </script>

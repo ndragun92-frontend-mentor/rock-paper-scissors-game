@@ -8,20 +8,24 @@ export type playerType =
   | "lizard"
   | "cyan"
   | null;
+
+type gameState = "won" | "lost" | "draw";
 export const useGameStore = defineStore("game", () => {
+  const defaultData = {
+    score: 0,
+    player: null,
+    opponent: null,
+    state: "lost" as gameState,
+    finished: false,
+  };
+
   const data = useStorage<{
     score: number;
     player: playerType;
     opponent: playerType;
-    won: boolean;
+    state: gameState;
     finished: boolean;
-  }>("game-data", {
-    score: 0,
-    player: null,
-    opponent: null,
-    won: false,
-    finished: false,
-  });
+  }>("game-data", defaultData);
 
   const setScore = (score: number) => {
     data.value.score = score;
@@ -35,5 +39,12 @@ export const useGameStore = defineStore("game", () => {
     data.value.opponent = value;
   };
 
-  return { data, setScore, setPlayer, setOpponent };
+  const reset = () => {
+    data.value = {
+      ...defaultData,
+      score: data.value.score,
+    };
+  };
+
+  return { data, setScore, setPlayer, setOpponent, reset };
 });
