@@ -86,7 +86,7 @@
                         <template
                           v-else-if="gameStore.data.data.state === 'won'"
                         >
-                          You won
+                          You win
                         </template>
                         <template v-else> You lose </template>
                       </h2>
@@ -223,7 +223,7 @@
                         <template
                           v-else-if="gameStore.data.data.state === 'won'"
                         >
-                          You won
+                          You win
                         </template>
                         <template v-else> You lose </template>
                       </h2>
