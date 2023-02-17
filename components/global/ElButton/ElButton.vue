@@ -1,15 +1,15 @@
 <template>
   <button
-    class="mx-auto bg-primary-light w-40 h-40 flex items-center justify-center rounded-full border-10 hover:-translate-y-2 duration-200"
+    class="mx-auto bg-primary-light w-32 md:w-40 h-32 md:h-40 flex items-center justify-center rounded-full border-10 hover:-translate-y-2 duration-200"
     :class="returnClass"
     type="button"
     @click="gameStore.setPlayer(props.type)"
   >
     <span
-      class="bg-primary-light w-32 h-32 rounded-full flex items-center justify-center shadow-inner"
+      class="bg-primary-light w-24 md:w-32 h-24 md:h-32 rounded-full flex items-center justify-center shadow-inner"
     >
       <img
-        class="block w-16 h-16 object-contain"
+        class="block w-12 md:w-16 h-12 md:h-16 object-contain"
         :src="`/images/${returnIcon}`"
         :alt="`Icon ${props.type}`"
       />
