@@ -1,20 +1,25 @@
 import type { playerType } from "~/store/gameStore";
 import { useGameStore } from "~/store/gameStore";
-import { promiseTimeout } from "@vueuse/core";
+import { promiseTimeout, useStorage } from "@vueuse/core";
 
 export default function useGame() {
   const gameStore = useGameStore();
+
+  const game = useStorage("game-score", {
+    data: {
+      score: 0,
+    },
+  });
   const botPlay = async () => {
     const card = pickRandom();
     gameStore.setOpponent(card);
     winner();
     await promiseTimeout(1000);
-    gameStore.data.finished = true;
+    gameStore.data.data.finished = true;
   };
 
   const availableCardsSimple = ["scissors", "paper", "rock"] as playerType[];
   const pickRandom = () => {
-    console.log(availableCardsSimple);
     return availableCardsSimple[
       Math.floor(Math.random() * availableCardsSimple.length)
     ];
@@ -29,8 +34,8 @@ export default function useGame() {
   };
 
   const winner = () => {
-    const playerChoice = gameStore.data.player;
-    const opponentChoice = gameStore.data.opponent;
+    const playerChoice = gameStore.data.data.player;
+    const opponentChoice = gameStore.data.data.opponent;
     switch (playerChoice) {
       case "rock":
         if (opponentChoice === "paper") {
@@ -41,21 +46,39 @@ export default function useGame() {
           lost();
         }
         break;
+      case "paper":
+        if (opponentChoice === "rock") {
+          won();
+        } else if (opponentChoice === "paper") {
+          draw();
+        } else if (opponentChoice === "scissors") {
+          lost();
+        }
+        break;
+      case "scissors":
+        if (opponentChoice === "paper") {
+          won();
+        } else if (opponentChoice === "scissors") {
+          draw();
+        } else if (opponentChoice === "rock") {
+          lost();
+        }
+        break;
     }
   };
 
   const won = () => {
-    gameStore.data.state = "won";
-    gameStore.data.score++;
+    gameStore.data.data.state = "won";
+    game.value.data.score++;
   };
 
   const draw = () => {
-    gameStore.data.state = "draw";
+    gameStore.data.data.state = "draw";
   };
 
   const lost = () => {
-    if (gameStore.data.score > 0) {
-      gameStore.data.score--;
+    if (game.value.data.score > 0) {
+      game.value.data.score--;
     }
   };
 
@@ -63,5 +86,5 @@ export default function useGame() {
     gameStore.reset();
   };
 
-  return { botPlay, pluralize, playAgain };
+  return { game, botPlay, pluralize, playAgain };
 }

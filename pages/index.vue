@@ -20,15 +20,21 @@
             >
               Score
             </div>
-            <div
-              class="font-bold text-5xl md:text-7xl text-primary-dark"
-              v-text="gameStore.data.score"
-            />
+            <client-only>
+              <div
+                class="font-bold text-5xl md:text-7xl text-primary-dark"
+                v-text="game.data.score"
+              />
+            </client-only>
           </div>
         </header>
         <main class="flex-1 flex items-center justify-center p-10 md:p-2">
           <transition-slide group appear>
-            <div v-if="!gameStore.data.player" key="stage1" class="relative">
+            <div
+              v-if="!gameStore.data.data.player"
+              key="stage1"
+              class="relative"
+            >
               <img
                 class="block"
                 src="/images/bg-triangle.svg"
@@ -55,17 +61,17 @@
                   <div class="mt-12">
                     <lazy-el-button
                       :large="true"
-                      :type="gameStore.data.player"
+                      :type="gameStore.data.data.player"
                       :won="
-                        gameStore.data.opponent &&
-                        gameStore.data.state === 'won'
+                        gameStore.data.data.opponent &&
+                        gameStore.data.data.state === 'won'
                       "
                     />
                   </div>
                 </div>
                 <transition-slide>
                   <div
-                    v-if="gameStore.data.opponent"
+                    v-if="gameStore.data.data.opponent"
                     class="relative whitespace-nowrap"
                   >
                     <div
@@ -74,17 +80,19 @@
                       <h2
                         class="text-6xl uppercase font-bold text-primary-light text-shadow"
                       >
-                        <template v-if="gameStore.data.state === 'draw'">
+                        <template v-if="gameStore.data.data.state === 'draw'">
                           Draw
                         </template>
-                        <template v-else-if="gameStore.data.state === 'won'">
+                        <template
+                          v-else-if="gameStore.data.data.state === 'won'"
+                        >
                           You won
                         </template>
                         <template v-else> You lose </template>
                       </h2>
                       <transition-scale>
                         <button
-                          v-if="gameStore.data.finished"
+                          v-if="gameStore.data.data.finished"
                           class="mt-6 bg-primary-light text-lg py-2.5 w-full text-primary-dark hover:text-red-500 tracking-widest uppercase rounded-lg shadow-lg"
                           type="button"
                           @click="playAgain"
@@ -101,7 +109,7 @@
                   >
                     <span
                       v-text="
-                        timer && !gameStore.data.opponent
+                        timer && !gameStore.data.data.opponent
                           ? 'The house will pick in'
                           : 'The house picked'
                       "
@@ -109,12 +117,12 @@
                   </div>
                   <div class="mt-12">
                     <lazy-el-button
-                      v-if="gameStore.data.opponent"
+                      v-if="gameStore.data.data.opponent"
                       :large="true"
-                      :type="gameStore.data.opponent"
+                      :type="gameStore.data.data.opponent"
                       :won="
-                        gameStore.data.opponent &&
-                        gameStore.data.state === 'lost'
+                        gameStore.data.data.opponent &&
+                        gameStore.data.data.state === 'lost'
                       "
                     />
                     <lazy-el-button-placeholder v-else :large="true">
@@ -138,16 +146,16 @@
                   <div
                     :class="{
                       'relative z-10':
-                        gameStore.data.opponent &&
-                        gameStore.data.state === 'lost',
+                        gameStore.data.data.opponent &&
+                        gameStore.data.data.state === 'lost',
                     }"
                   >
                     <div class="mb-8">
                       <lazy-el-button
-                        :type="gameStore.data.player"
+                        :type="gameStore.data.data.player"
                         :won="
-                          gameStore.data.opponent &&
-                          gameStore.data.state === 'won'
+                          gameStore.data.data.opponent &&
+                          gameStore.data.data.state === 'won'
                         "
                         :step="2"
                       />
@@ -161,11 +169,11 @@
                   <div>
                     <div class="mb-8">
                       <lazy-el-button
-                        v-if="gameStore.data.opponent"
-                        :type="gameStore.data.opponent"
+                        v-if="gameStore.data.data.opponent"
+                        :type="gameStore.data.data.opponent"
                         :won="
-                          gameStore.data.opponent &&
-                          gameStore.data.state === 'lost'
+                          gameStore.data.data.opponent &&
+                          gameStore.data.data.state === 'lost'
                         "
                         :step="2"
                       />
@@ -188,7 +196,7 @@
                     >
                       <span
                         v-text="
-                          timer && !gameStore.data.opponent
+                          timer && !gameStore.data.data.opponent
                             ? 'The house picking'
                             : 'The house picked'
                         "
@@ -200,7 +208,7 @@
                   <div
                     class="relative whitespace-nowrap duration-700"
                     :class="
-                      gameStore.data.opponent ? 'opacity-100' : 'opacity-0'
+                      gameStore.data.data.opponent ? 'opacity-100' : 'opacity-0'
                     "
                   >
                     <div
@@ -209,10 +217,12 @@
                       <h2
                         class="text-6xl uppercase font-bold text-primary-light text-shadow"
                       >
-                        <template v-if="gameStore.data.state === 'draw'">
+                        <template v-if="gameStore.data.data.state === 'draw'">
                           Draw
                         </template>
-                        <template v-else-if="gameStore.data.state === 'won'">
+                        <template
+                          v-else-if="gameStore.data.data.state === 'won'"
+                        >
                           You won
                         </template>
                         <template v-else> You lose </template>
@@ -220,7 +230,9 @@
                       <button
                         class="mt-6 bg-primary-light text-lg py-2.5 w-full text-primary-dark hover:text-red-500 tracking-widest uppercase rounded-lg shadow-lg duration-700"
                         :class="
-                          gameStore.data.finished ? 'opacity-100' : 'opacity-0'
+                          gameStore.data.data.finished
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         "
                         type="button"
                         @click="playAgain"
@@ -263,10 +275,10 @@ const interval = ref<any>(null);
 const timer = ref<any>(3);
 
 const gameStore = useGameStore();
-const { botPlay, pluralize, playAgain } = useGame();
+const { game, botPlay, pluralize, playAgain } = useGame();
 
 watch(
-  () => gameStore.data.player,
+  () => gameStore.data.data.player,
   (type) => {
     if (type) {
       interval.value = setInterval(() => {
