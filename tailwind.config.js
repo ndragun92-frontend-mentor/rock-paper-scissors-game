@@ -41,6 +41,8 @@ module.exports = {
       },
       boxShadow: {
         outerRock: "0 10px 1px -1px #9f1535, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerPaper: "0 10px 1px -1px #2a48c4, 0 8px 7px 0 rgb(0 0 0 / 40%)",
+        outerScissors: "0 10px 1px -1px #c76e1e, 0 8px 7px 0 rgb(0 0 0 / 40%)",
         inner: "inset 0 10px 1px -1px #b9bfd4",
       },
       flex: {

@@ -21,16 +21,13 @@
           <div class="relative">
             <img src="/images/bg-triangle.svg" alt="BG triangle" />
             <div class="absolute bottom-0 left-0 right-0 flex items-center">
-              <button
-                class="mx-auto bg-primary-light w-40 h-40 flex items-center justify-center rounded-full border-10 bg-rock shadow-outerRock"
-                type="button"
-              >
-                <span
-                  class="bg-primary-light w-32 h-32 rounded-full flex items-center justify-center shadow-inner"
-                >
-                  <img src="/images/icon-rock.svg" alt="Icon Rock" />
-                </span>
-              </button>
+              <el-button type="rock" />
+            </div>
+            <div class="absolute -top-[25%] -left-[15%]">
+              <el-button type="paper" />
+            </div>
+            <div class="absolute -top-[25%] -right-[15%]">
+              <el-button type="scissors" />
             </div>
           </div>
         </main>
