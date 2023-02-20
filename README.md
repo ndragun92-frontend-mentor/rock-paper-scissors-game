@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://www.frontendmentor.io/solutions/rock-paper-scissors-game-with-bonus-task-made-with-nuxt-3-tailwind-iYQDLfOYdI)
+- Solution URL: [Solution](https://www.frontendmentor.io/solutions/rock-paper-scissors-game-with-bonus-task-made-with-nuxt-3-tailwind-iYQDLfOYdI)
 - Live Site URL: [Vercel](https://rock-paper-scissors-game-seven-gules.vercel.app/)
 
 ## My process
