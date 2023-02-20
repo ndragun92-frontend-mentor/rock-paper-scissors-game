@@ -32,7 +32,7 @@ export default function useGame() {
     }
   });
 
-  const isBonusGame = computed(() => game.value.data.score >= 5);
+  const isBonusGame = computed(() => game.value.data.score >= 3);
   const pickRandom = () => {
     return availableCardsSimple.value[
       Math.floor(Math.random() * availableCardsSimple.value.length)
